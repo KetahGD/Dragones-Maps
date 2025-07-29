@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRAGONES MAPS</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="Image/Icono.ico">
+</head>
+<body>
+
+
+<header class="top-bar">
+  <div class="top-left">
+    <img src="https://img.icons8.com/?size=100&id=S5biqohaDgd1&format=png&color=000000"
+         alt="Menú" class="menu-icon" onclick="togglePanel()" />
+    <span class="top-title">DRAGONES MAPS</span>
+  </div>
+
+  <div class="search-right">
+<div class="busqueda-container">
+  <input type="text" id="busqueda" placeholder="Buscar edificio..." onkeyup="filtrarSugerencias(event)" autocomplete="off">
+  <img src="https://img.icons8.com/?size=100&id=3723&format=png&color=000000" alt="Buscar" class="icono-busqueda"/>
+  <div id="sugerencias" class="sugerencias"></div>
+</div>
+  <a href="Inicio.html" class="icono-perfil-link">
+    <img src="https://img.icons8.com/?size=100&id=0PXqKKGn88m8&format=png&color=000000" alt="Perfil" class="icono-perfil" />
+  </a>
+  </div>
+</header>
+
+<div id="panel" class="panel-lateral">
+  <div class="nav-item">
+    <a href="index.html">
+        <img src="https://img.icons8.com/?size=100&id=3723&format=png&color=000000" alt="">
+        <span>Marcadores</span>
+    </a>
+  </div>
+  <div class="nav-item">
+    <img src="https://img.icons8.com/?size=100&id=23&format=png&color=000000" alt="">
+    <span>Agenda</span>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" onclick="togglePanel()"></div>
+
+<!-- CONTENIDO CENTRAL PARA LOS CALENDARIOS -->
+<main class="main-content">
+  <div class="calendar-header">
+    <h2 class="calendar-title">CALENDARIO</h2>
+    <div class="calendar-buttons">
+      <button onclick="cambiarImagen('1')">Imagen 1</button>
+      <button onclick="cambiarImagen('2')">Imagen 2</button>
+      <button onclick="cambiarImagen('3')">Imagen 3</button>
+    </div>
+  </div>
+
+  <div class="calendar-container">
+    <img id="calendar-img" src="Image/Calendario (1).png" alt="Calendario" class="calendar-img">
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+.campo-input input {
+  width: 100%; /* se adaptará al ancho del contenedor */
+  padding: 10px 14px;
+  background-color: #b1e6b1; /* verde claro tipo imagen */
+  border: 1px solid black; /* borde definido */
+  border-radius: 12px;
+  font-size: 14px;
+  text-transform: uppercase; /* letras mayúsculas como en imagen */
+  color: #555; /* gris del texto */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  outline: none;
+}
+
+
+.campo-input label {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+
+
+.boton {
+  padding: 10px 20px;
+  background-color: #085f26;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+.boton:hover {
+  background-color: #0a6f2c;
+}
+.boton-cancelar {
+  padding: 10px 20px;
+  background-color: #085f26; /* mismo color que .boton-verde */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+.boton-cancelar:hover {
+  background-color: #0a6f2c; /* mismo hover que .boton-verde */
+}
+
+h1.titulo-maps {
+  font-size: 36px;
+  font-family: 'roboto', sans-serif;
+  color: #000;
+  margin-bottom: 20px;
+}
+.contenido-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 460px; /* Puedes ampliar a 400px o más si quieres más presencia */
+}
+.inicio-container {
+  margin-left: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8fdf7;
+  padding: 40px;
+}

@@ -1,0 +1,102 @@
+/* ====== CONTENEDOR PRINCIPAL ====== */
+.inicio-container {
+    margin-left: 60px; /* espacio para barra lateral */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8fdf7;
+    
+}
+
+/* ====== Fila con dragón a la izquierda ====== */
+.fila-principal {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* ====== Logo del dragón ====== */
+.logo-dragones {
+    width: 200px;
+    height: auto;
+}
+.logo-dragonesString {
+    width: 400px;
+    height: auto;
+}
+
+
+/* ====== Contenido a la derecha del dragón ====== */
+.contenido-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* ====== Título ====== */
+.titulo-maps {
+    font-size: 42px;
+    font-family: 'Arial Black', sans-serif;
+    color: #000;
+    margin: 0;
+}
+
+/* ====== Búsqueda ====== */
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #b1e6b1;
+    border: 2px solid #333;
+    padding: 8px 12px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-box img {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+/* ====== Botones ====== */
+.botones {
+    display: flex;
+    gap: 20px;
+}
+
+.boton-verde {
+    padding: 10px 20px;
+    background-color: #085f26;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+
+.boton-verde:hover {
+    background-color: #0a6f2c;
+}
+.panel-lateral.activo {
+  width: 50px; /* antes 240px */
+}
+.panel-lateral .nav-item span {
+  display: none; /* Oculta texto por defecto */
+}
+.inicio-container {
+  margin-left: 60px; /* ajustado al nuevo ancho de la barra */
+}

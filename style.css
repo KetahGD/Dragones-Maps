@@ -1,0 +1,568 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+}
+span {
+  font-family: 'Roboto', sans-serif;
+}
+h1.DRAGONESMAPS {
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #333;
+  z-index: 1200;
+}
+
+
+.search-right input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  background-color: #fff;
+  font-size: 14px;
+}
+.menu-header {
+  position: fixed;
+  top: 24px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1300;
+}
+
+.menu-icon {
+  width: 24px;
+  cursor: pointer;
+}
+
+.menu-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  display: none; /* Oculto por defecto */
+}
+
+/* Mostrar el título solo si el panel está activo */
+.panel-lateral.activo ~ .menu-header .menu-title {
+  display: inline;
+}
+.panel-lateral {
+  position: fixed;
+  top: 60;
+  left: 0;
+  width: 3%;
+  height: 100%;
+  background-color: #abe1a5;
+  box-shadow:
+    0px 1px 2px rgba(0,0,0,0.12),
+    0px 2px 4px rgba(0,0,0,0.12),
+    0px 4px 8px rgba(0,0,0,0.12);
+  transition: width 0.3s ease;
+  padding: 80px 10px 30px 10px; /* <-- aquí el cambio */
+  z-index: 1100;
+  overflow-x: hidden;
+}
+
+.panel-lateral h1 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none; /* Oculto por defecto */
+}
+
+.panel-lateral .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  padding-left: 10px; /* mantiene íconos alineados a la izquierda */
+}
+
+.panel-lateral .nav-item span {
+  display: none; /* Oculta el texto por defecto */
+}
+
+/* Cuando el panel está activo */
+.panel-lateral.activo {
+  width: 240px;
+}
+
+.panel-lateral.activo h1 {
+  display: block;
+}
+
+.panel-lateral.activo .nav-item {
+  justify-content: flex-start;
+}
+.panel-lateral .nav-item img {
+  width: 20px;
+  height: 20px;
+}
+.panel-lateral.activo .nav-item span {
+  display: inline;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1050;
+}
+
+.overlay.activo {
+  display: block;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.iframe-container {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 25%;
+  height: 200px;
+  z-index: 200;
+}
+
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.11),
+    0 2px 2px rgba(0,0,0,0.11),
+    0 4px 4px rgba(0,0,0,0.11),
+    0 6px 8px rgba(0,0,0,0.11),
+    0 8px 16px rgba(0,0,0,0.11);
+}
+
+.menu-icon {
+  position: fixed;
+  top: 24px;
+  left: 20px;
+  width: 24px;
+  cursor: pointer;
+  z-index: 1300;
+}
+
+/* Controles de zoom */
+
+.zoom-controls {
+  position: absolute;
+  bottom: 30px;
+  right: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 300;
+}
+
+
+.zoom-controls button {
+  width: 42px;
+  height: 42px;
+  border: #085f26;
+  border-radius: 50%;
+  background-color: #085f26;
+  color: white; 
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.zoom-controls button:hover {
+  background-color: #abe1a5;
+  border: #085f26;
+}
+/* Barra superior estilo Material Design */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #abe1a5;
+  display: flex;
+  align-items: center;
+  padding-left: 60px; /* espacio para el ícono */
+  z-index: 1500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenido a la izquierda */
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Título */
+.top-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Ya existe esta clase, pero podrías ajustar si hace falta */
+.search-right {
+  position: fixed;
+  top: 14px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1600;
+}
+
+.search-right input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+}
+.search-right img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Ajustar posición del mapa para no quedar debajo del header */
+#map {
+  position: absolute;
+  top: 60px; /* altura de la barra superior */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px); /* ajusta al alto total de la ventana menos el header */
+  z-index: 100;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.menu-icon {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1600; /* se asegura que esté encima */
+}
+.app-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+#info-edificio {
+  display: none;
+  position: absolute;
+  top: 60px; /* Justo debajo del top-bar */
+  right: 0;
+  bottom: 0;
+  width: 350px;
+  background: #ffffff;
+  padding: 16px;
+  border-left: 1px solid #ccc;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+
+#info-edificio img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+#info-edificio .texto p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 2;
+}
+
+#info-edificio iframe {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  margin-top: 12px;
+  border: none;
+}
+
+#info-edificio button {
+  margin-top: 14px;
+  background-color: #085f26;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+}
+
+.main-content {
+  margin-left: 60px; /* para que no se oculte debajo del panel */
+  margin-top: 80px; /* debajo del top-bar */
+  padding: 20px;
+  z-index: 100;
+}
+
+.calendar-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.calendar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-img {
+  max-width: 300px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+/* Botones para cambiar calendario */
+.calendar-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.calendar-buttons button {
+  padding: 10px 16px;
+  background-color: #085f26;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin: 0 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.calendar-buttons button:hover {
+  background-color: #abe1a5;
+  color: #000;
+}
+
+/* Fix: panel lateral se ve cortado */
+.panel-lateral {
+  top: 60px; 
+  padding: 20px 10px 30px 10px;
+}
+
+/* Ajustes extra por si el contenido principal se oculta */
+.main-content {
+  margin-left: 60px;
+  margin-top: 80px;
+  padding: 20px;
+  z-index: 100;
+  overflow-x: auto;
+}
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.calendar-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.calendar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.calendar-buttons button {
+  padding: 8px 14px;
+  background-color: #085f26;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-buttons button:hover {
+  background-color: #abe1a5;
+  color: #000;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: left;
+}
+
+.calendar-img {
+  max-width: 100%;
+  width: 900px;
+  border-radius: 14px;
+  box-shadow: 0 6px 10px rgba(89, 221, 62, 0.2);
+}
+
+.sugerencias {
+  position: absolute;
+  top: 100%; /* justo debajo del input */
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: 100%; /* que sea del mismo ancho que el input */
+  display: none;
+  z-index: 1000;
+  font-family: 'Arial', sans-serif;
+}
+
+
+.sugerencias div {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.sugerencias div:last-child {
+  border-bottom: none;
+}
+
+.sugerencias div:hover,
+.sugerencias div.seleccionado {
+  background-color: #f2f2f2;
+}
+
+.sugerencias div .icono {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+}
+
+
+.busqueda-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.busqueda-container input[type="text"] {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 6px;
+  background: transparent;
+  color: #333;
+  width: 160px;
+}
+.busqueda-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.busqueda-container input,
+.busqueda-container select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  flex: 1;
+  min-width: 120px;
+}
+
+.busqueda-container .ruta-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.icono-busqueda {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.busqueda-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.busqueda-wrapper input {
+  width: 100%;
+  padding: 8px 40px 8px 10px; /* espacio a la derecha para el ícono */
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.icono-busqueda {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  opacity: 0.6;
+}
