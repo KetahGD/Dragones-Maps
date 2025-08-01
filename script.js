@@ -37,7 +37,7 @@ function mostrarUbicacionEnTiempoReal() {
       }).addTo(map).bindPopup("📍 Tu ubicación actual");
 
       userCircle = L.circle(userCoords, {
-        radius: 12,
+        radius: 5,
         color: 'green',
         fillColor: '#0f0',
         fillOpacity: 0.3
