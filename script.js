@@ -4,6 +4,58 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+mostrarUbicacionEnTiempoReal();
+
+let userMarker;
+let userCircle;
+
+function mostrarUbicacionEnTiempoReal() {
+  if (!navigator.geolocation) {
+    alert("La geolocalización no está disponible en este navegador.");
+    return;
+  }
+
+  navigator.geolocation.watchPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const accuracy = pos.coords.accuracy;
+
+    const userCoords = [lat, lng];
+
+    // Si ya existe el marcador y el círculo, actualízalos
+    if (userMarker && userCircle) {
+      userMarker.setLatLng(userCoords);
+      userCircle.setLatLng(userCoords).setRadius(accuracy);
+    } else {
+      // Crear marcador y círculo por primera vez
+      userMarker = L.marker(userCoords, {
+        icon: L.icon({
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/64/64113.png', // Ícono personalizado
+          iconSize: [25, 25],
+          iconAnchor: [12, 12]
+        })
+      }).addTo(map).bindPopup("📍 Tu ubicación actual");
+
+      userCircle = L.circle(userCoords, {
+        radius: accuracy,
+        color: 'green',
+        fillColor: '#0f0',
+        fillOpacity: 0.3
+      }).addTo(map);
+    }
+
+    // No se centra el mapa aquí
+  }, err => {
+    console.error("Error al obtener la ubicación:", err);
+    alert("No se pudo obtener tu ubicación.");
+  }, {
+    enableHighAccuracy: true,
+    maximumAge: 10000,
+    timeout: 10000
+  });
+}
+
+
 const edificios = [
     { nombre: "La Era", coords: [19.613065042754652, -99.33843453247002], imagen: "Image/LaEra.jpg", texto: "Zona en la que se encuentra el area de psicologia y la zona rosa la cual es la zona de apoyo hacia las mujeres", iframe: "https://panoraven.com/es/embed/Mrmm8WEuc9" },
     { nombre: "Edificio D", coords: [19.613199385731225, -99.33929682332334], imagen: "Image/EdificioD.png", texto: "Este edificio se encarga de lo que es la programación. La principal carrera que se desarrolla aquí es Desarrollo de Software Multiplataforma.", iframe: "https://panoraven.com/es/embed/Mrmm8WEuc9" },
