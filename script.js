@@ -34,7 +34,7 @@ function mostrarUbicacionEnTiempoReal() {
           iconSize: [25, 25],
           iconAnchor: [12, 12]
         })
-      }).addTo(map).bindPopup("📍 Tu ubicación actual");
+      }).addTo(map);
 
       userCircle = L.circle(userCoords, {
         radius: 5,
