@@ -25,7 +25,7 @@ function mostrarUbicacionEnTiempoReal() {
     // Si ya existe el marcador y el círculo, actualízalos
     if (userMarker && userCircle) {
       userMarker.setLatLng(userCoords);
-      userCircle.setLatLng(userCoords).setRadius(accuracy);
+      userCircle.setLatLng(userCoords).setRadius(5);
     } else {
       // Crear marcador y círculo por primera vez
       userMarker = L.marker(userCoords, {
