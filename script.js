@@ -58,7 +58,7 @@ function mostrarUbicacionEnTiempoReal() {
 
 const edificios = [
     { nombre: "La Era", coords: [19.613065042754652, -99.33843453247002], imagen: "Image/LaEra.jpg", texto: "Zona en la que se encuentra el area de psicologia y la zona rosa la cual es la zona de apoyo hacia las mujeres", iframe: "https://panoraven.com/es/embed/Mrmm8WEuc9" },
-    { nombre: "Edificio D", coords: [19.613199385731225, -99.33929682332334], imagen: "Image/EdificioD.png", texto: "Este edificio se encarga de lo que es la programación. La principal carrera que se desarrolla aquí es Desarrollo de Software Multiplataforma.", iframe: "https://panoraven.com/es/embed/Mrmm8WEuc9" },
+    { nombre: "Edificio D", coords: [19.613199385731225, -99.33929682332334], imagen: "Image/EdificioD.png", texto: "Este edificio se encarga de lo que es la programación. La principal carrera que se desarrolla aquí es Desarrollo de Software Multiplataforma.", iframe: "https://panoraven.com/es/embed/CHpzNsR7Ru" },
     { nombre: "Edificio E", coords: [19.612658550345884, -99.33923302928696], imagen: "Image/EdificioE.png", texto: "Este es el encargado de los laboratorios de textiles, serigrafía y planchado", iframe: "https://panoraven.com/es/embed/hyJ7y1XC7O" },
     { nombre: "Edificio G", coords: [19.612740662393154, -99.34097796305412], imagen: "Image/EdificioG.jpg", texto: "Carreras ofertadas: Técnico Superior universitario en emprendimiento formulación y evaluación de proyectos, TSU en Gestión del capital Humano , TSU en Administración Área Capital Humano", iframe: "https://panoraven.com/es/embed/2JsXuQydkU" },
     { nombre: "Cafeteria", coords: [19.61259982026864, -99.34032226031468], imagen: "Image/Cafeteria.jpg", texto: "La cafeteria actualmente se encuentra fuera de servicio debido a las nuevas leyes impartidas por la presidenta actual Claudia Sheinbaum", iframe: "https://panoraven.com/es/embed/ffWOmO5UPs" },
@@ -271,3 +271,4 @@ function llenarSelectores() {
 }
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
