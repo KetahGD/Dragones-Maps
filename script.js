@@ -151,7 +151,8 @@ const edificiosS = {
   'Puerta 5': 'Acceso Estudiantes de Área de Salud',
   'ExHacienda': 'Casco de la Ex-Hacienda',
   'Centro de Investigacion': 'Centro de Investigación y Vinculación',
-  'Gimnasio': 'Estadio y Gimnasio "Dragones"'
+  'Gimnasio': 'Estadio y Gimnasio "Dragones"',
+  'Harmon Hall': 'Harmon Hall'
 };
 
 
@@ -321,6 +322,7 @@ map.on('locationfound', function (e) {
 
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
