@@ -76,7 +76,8 @@ const edificios = [
     { nombre: "Puerta 5", coords: [19.613505302108074, -99.34378693919246], imagen: "Image/Puerta5.jpg", texto: "Puerta de acceso para los estudiantes que cursan principalmente Enfermeria y Terapia Fisica", iframe: "https://panoraven.com/es/embed/QAa0GDPhqq" },
     { nombre: "ExHacienda", coords: [19.61297453785049, -99.3370500652114], imagen: "Image/ExHacienda.jpg", texto: "Este es el lugar en el que se encuentran los restos de la hacienda en la que se plantaron las bases para lo que es la Universidad Tecnologica Fidel Velazquez", iframe: "https://panoraven.com/es/embed/ESSkrAaOnw" },
     { nombre: "Centro de Investigacion", coords: [19.612731460349398, -99.34158703635343], imagen: "Image/CentroInvestigacion.jpg", texto: "Centro de vinculacion e investigacion para la resolucion de problemas y vinculacion con empresas para proyectos a futuro, ademas se encuentran los laboratorio de Metrología y Manufactura.", iframe: "https://panoraven.com/es/embed/XtytdM72be" },
-    { nombre: "Gimnasio", coords: [19.61192531212748, -99.34346601220417], imagen: "Image/Gimnasio.jpg", texto: "Aqui es donde se encuentra el Estadio Dragones y ademas se practican diferentes disciplinas como lo son basquetball, taekwondo, voleyball y en la parte superior se encuentra lo que es el gimnasio con acceso gratuito para los estudiantes", iframe: "https://panoraven.com/es/embed/yo1POTdxXY" }
+    { nombre: "Gimnasio", coords: [19.61192531212748, -99.34346601220417], imagen: "Image/Gimnasio.jpg", texto: "Aqui es donde se encuentra el Estadio Dragones y ademas se practican diferentes disciplinas como lo son basquetball, taekwondo, voleyball y en la parte superior se encuentra lo que es el gimnasio con acceso gratuito para los estudiantes", iframe: "https://panoraven.com/es/embed/yo1POTdxXY" },
+    { nombre: "Harmon Hall" , coords:[19.561760889280613, -99.22256077579563] }
 ];
 edificios.forEach(edificio => {
   if (edificio.coords.length === 2) {
@@ -270,6 +271,56 @@ function llenarSelectores() {
   });
 }
 
+// Función para calcular distancia entre dos coordenadas (en metros)
+function distanciaEnMetros(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // Radio de la Tierra en metros
+  const rad = Math.PI / 180;
+  const dLat = (lat2 - lat1) * rad;
+  const dLon = (lon2 - lon1) * rad;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+// Crear popup para mostrar nombre del edificio cercano
+const popupCercano = L.popup({ offset: [0, -30], autoClose: false, closeOnClick: false });
+
+// Modificar el evento de geolocalización
+map.on('locationfound', function (e) {
+  const userLat = e.latitude;
+  const userLng = e.longitude;
+
+  // Actualizar marcador y círculo
+  userMarker.setLatLng([userLat, userLng]);
+  userCircle.setLatLng([userLat, userLng]);
+
+  // Buscar edificio más cercano
+  let edificioCercano = null;
+  let distanciaMinima = Infinity;
+  edificios.forEach(edificio => {
+    const dist = distanciaEnMetros(userLat, userLng, edificio.latitud, edificio.longitud);
+    if (dist < 30 && dist < distanciaMinima) {
+      distanciaMinima = dist;
+      edificioCercano = edificio;
+    }
+  });
+
+  // Mostrar popup si hay edificio cercano
+  if (edificioCercano) {
+    popupCercano
+      .setLatLng([userLat, userLng])
+      .setContent(`<strong>${edificioCercano.nombre}</strong>`)
+      .openOn(map);
+  } else {
+    map.closePopup(popupCercano);
+  }
+});
+
+
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
