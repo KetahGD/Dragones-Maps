@@ -58,7 +58,18 @@
     </div>
     </div>
 </div>
+<script type="module">
+  import { iniciarSesion } from "./auth.js";
+
+  const botonLogin = document.querySelector(".boton-verde");
+  botonLogin.addEventListener("click", () => {
+    const correo = document.getElementById("correo").value.trim();
+    const password = document.getElementById("password").value.trim();
+    iniciarSesion(correo, password);
+  });
+</script>
 
 </body>
 </html>
+
 
