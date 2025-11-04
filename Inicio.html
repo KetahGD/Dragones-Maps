@@ -35,13 +35,26 @@
     <div class="fila-principal">
         <img src="Image/DragonLogo.JPG" alt="Logo del dragón" class="logo-dragones" />
 
-    <div class="contenido-lateral">
-        <img src="Image/DragonesMaps.JPG" alt="Logo del dragón" class="logo-dragonesString" />
+<div class="contenido-lateral">
+    <img src="Image/DragonesMaps.JPG" alt="Logo del dragón" class="logo-dragonesString" />
+<div class="search-box">
+  <input
+    type="text"
+    id="busqueda"
+    placeholder="INGRESA EL EDIFICIO..."
+    onkeyup="filtrarSugerencias(event)"
+    autocomplete="off"
+  />
+  <img
+    src="https://img.icons8.com/?size=100&id=3723&format=png&color=000000"
+    alt="Buscar"
+    class="icono-busqueda"
+    id="icono-buscar"
+  />
+  <div id="sugerencias" class="sugerencias"></div>
+</div>
 
-        <div class="search-box">
-        <input type="text" placeholder="INGRESA EL EDIFICIO..." />
-        <img src="https://img.icons8.com/?size=100&id=3723&format=png&color=000000" alt="Buscar" />
-    </div>
+
 
         <div class="botones">
         <a href="InicioInciarSesion.html">
@@ -58,4 +71,3 @@
 <script src="busqueda.js"></script>
 </body>
 </html>
-
