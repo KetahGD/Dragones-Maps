@@ -14,7 +14,6 @@ h1.DRAGONESMAPS {
   z-index: 1200;
 }
 
-
 .search-right input {
   padding: 6px 10px;
   border-radius: 6px;
@@ -50,17 +49,17 @@ h1.DRAGONESMAPS {
 }
 .panel-lateral {
   position: fixed;
-  top: 60;
+  top: 60px;
   left: 0;
   width: 3%;
-  height: 100%;
+  height: calc(100vh - 60px);
   background-color: #abe1a5;
   box-shadow:
     0px 1px 2px rgba(0,0,0,0.12),
     0px 2px 4px rgba(0,0,0,0.12),
     0px 4px 8px rgba(0,0,0,0.12);
   transition: width 0.3s ease;
-  padding: 80px 10px 30px 10px; /* <-- aquí el cambio */
+  padding: 20px 10px 30px 10px;
   z-index: 1100;
   overflow-x: hidden;
 }
@@ -127,11 +126,15 @@ h1.DRAGONESMAPS {
 
 #map {
   position: absolute;
-  top: 0;
+  top: 60px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 60px);
   z-index: 100;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .iframe-container {
@@ -142,7 +145,6 @@ h1.DRAGONESMAPS {
   height: 200px;
   z-index: 200;
 }
-
 
 .iframe-container iframe {
   width: 100%;
@@ -167,7 +169,6 @@ h1.DRAGONESMAPS {
 }
 
 /* Controles de zoom */
-
 .zoom-controls {
   position: absolute;
   bottom: 30px;
@@ -178,11 +179,10 @@ h1.DRAGONESMAPS {
   z-index: 300;
 }
 
-
 .zoom-controls button {
   width: 42px;
   height: 42px;
-  border: #085f26;
+  border: 1px solid #085f26;
   border-radius: 50%;
   background-color: #085f26;
   color: white; 
@@ -196,8 +196,9 @@ h1.DRAGONESMAPS {
 
 .zoom-controls button:hover {
   background-color: #abe1a5;
-  border: #085f26;
+  border: 1px solid #085f26;
 }
+
 /* Barra superior estilo Material Design */
 .top-bar {
   position: fixed;
@@ -253,19 +254,6 @@ h1.DRAGONESMAPS {
   cursor: pointer;
 }
 
-/* Ajustar posición del mapa para no quedar debajo del header */
-#map {
-  position: absolute;
-  top: 60px; /* altura de la barra superior */
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 60px); /* ajusta al alto total de la ventana menos el header */
-  z-index: 100;
-  border-radius: 12px;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.15);
-}
 .menu-icon {
   position: absolute;
   top: 18px;
@@ -295,7 +283,6 @@ h1.DRAGONESMAPS {
   z-index: 2000;
   overflow-y: auto;
 }
-
 
 #info-edificio img {
   width: 100%;
@@ -454,7 +441,6 @@ h1.DRAGONESMAPS {
   font-family: 'Arial', sans-serif;
 }
 
-
 .sugerencias div {
   display: flex;
   align-items: center;
@@ -480,28 +466,8 @@ h1.DRAGONESMAPS {
   opacity: 0.7;
 }
 
-
 .busqueda-container {
   position: relative;
-  display: flex;
-  align-items: center;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  padding: 6px 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.busqueda-container input[type="text"] {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  padding: 6px;
-  background: transparent;
-  color: #333;
-  width: 160px;
-}
-.busqueda-container {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -509,7 +475,6 @@ h1.DRAGONESMAPS {
   padding: 8px 12px;
   border-radius: 25px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  position: relative;
   flex-wrap: wrap;
   max-width: 800px;
 }
@@ -565,4 +530,154 @@ h1.DRAGONESMAPS {
   height: 20px;
   pointer-events: none;
   opacity: 0.6;
+}
+
+/* Media Queries para Responsividad */
+
+/* Tablet y Escritorio Grande (768px y arriba) */
+@media (min-width: 768px) {
+  .iframe-container {
+    width: 25%;
+    height: 200px;
+  }
+
+  .zoom-controls {
+    right: 420px;
+  }
+
+  #info-edificio {
+    width: 350px;
+  }
+
+  .calendar-img {
+    width: 900px;
+  }
+
+  .busqueda-container input[type="text"] {
+    width: 160px;
+  }
+}
+
+/* Móvil (menos de 768px) */
+@media (max-width: 767px) {
+  /* Barra superior: reducir padding y tamaño de título */
+  .top-bar {
+    padding-left: 50px;
+    height: 50px;
+  }
+
+  .top-title {
+    font-size: 16px;
+  }
+
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+    top: 15px;
+    left: 15px;
+  }
+
+  /* Panel lateral: en móvil, oculto por defecto, y cuando activo, ancho completo o mayor */
+  .panel-lateral {
+    width: 0; /* oculto por defecto */
+    transition: width 0.3s ease;
+  }
+
+  .panel-lateral.activo {
+    width: 280px; /* ancho mayor en móvil para mejor usabilidad */
+  }
+
+  /* Mapa: ajustar top para barra más pequeña */
+  #map {
+    top: 50px;
+    height: calc(100vh - 50px);
+  }
+
+  .panel-lateral {
+    top: 50px;
+    height: calc(100vh - 50px);
+  }
+
+  /* Iframe container: más pequeño y posicionado abajo */
+  .iframe-container {
+    width: 90%;
+    height: 150px;
+    bottom: 20px;
+    right: 5%;
+    left: 5%;
+  }
+
+  /* Controles de zoom: mover a la izquierda o ajustar */
+  .zoom-controls {
+    right: 20px;
+    bottom: 200px; /* arriba del iframe */
+    flex-direction: row; /* horizontal en móvil */
+    gap: 5px;
+  }
+
+  .zoom-controls button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  /* Info edificio: ancho completo en móvil */
+  #info-edificio {
+    width: 100%;
+    top: 50px;
+    right: 0;
+    left: 0;
+    bottom: auto;
+    height: auto;
+    max-height: 50vh;
+  }
+
+  /* Calendario: imágenes más pequeñas, flex column */
+  .calendar-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calendar-img {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .calendar-title {
+    font-size: 24px;
+  }
+
+  .calendar-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .calendar-buttons button {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  /* Búsqueda: más compacta */
+  .busqueda-container {
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .busqueda-container input,
+  .busqueda-container select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .busqueda-wrapper input {
+    padding: 10px 40px 10px 10px;
+  }
+
+  /* Main content: ajustar márgenes */
+  .main-content {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 10px;
+  }
 }
