@@ -67,7 +67,21 @@
     </div>
   </div>
 </div>
+<script type="module">
+  import { registrarUsuario } from "./auth.js";
+
+  const botonRegistrar = document.querySelector(".boton");
+  botonRegistrar.addEventListener("click", () => {
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmar = document.getElementById("confirmar").value.trim();
+
+    registrarUsuario(nombre, correo, password, confirmar);
+  });
+</script>
 
 
 </body>
 </html>
+
