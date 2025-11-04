@@ -100,3 +100,58 @@
 .inicio-container {
   margin-left: 60px; /* ajustado al nuevo ancho de la barra */
 }
+.search-box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#busqueda {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* espacio a la derecha para el ícono */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.icono-busqueda {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.sugerencias {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.sugerencias div {
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sugerencias div.seleccionado {
+  background-color: #e0e0e0;
+}
+
+.sugerencias img.icono {
+  width: 20px;
+  height: 20px;
+}
