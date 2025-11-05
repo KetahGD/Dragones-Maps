@@ -19,44 +19,41 @@ function mostrarUbicacionEnTiempoReal() {
     return;
   }
 
-  navigator.geolocation.watchPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-    const accuracy = pos.coords.accuracy;
+navigator.geolocation.watchPosition(pos => {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
+  const accuracy = pos.coords.accuracy;
+  const userCoords = [lat, lng];
 
-    const userCoords = [lat, lng];
+  if (userMarker && userCircle) {
+    userMarker.setLatLng(userCoords);
+    userCircle.setLatLng(userCoords).setRadius(5);
+  } else {
+    userMarker = L.marker(userCoords, {
+      icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/64/64113.png',
+        iconSize: [25, 25],
+        iconAnchor: [12, 12]
+      })
+    }).addTo(map);
 
-    // Si ya existe el marcador y el círculo, actualízalos
-    if (userMarker && userCircle) {
-      userMarker.setLatLng(userCoords);
-      userCircle.setLatLng(userCoords).setRadius(5);
-    } else {
-      // Crear marcador y círculo por primera vez
-      userMarker = L.marker(userCoords, {
-        icon: L.icon({
-          iconUrl: 'https://cdn-icons-png.flaticon.com/512/64/64113.png', // Ícono personalizado
-          iconSize: [25, 25],
-          iconAnchor: [12, 12]
-        })
-      }).addTo(map);
+    userCircle = L.circle(userCoords, {
+      radius: 5,
+      color: 'green',
+      fillColor: '#0f0',
+      fillOpacity: 0.3
+    }).addTo(map);
+  }
+}, err => {
+  // En lugar de alertas, mostramos el mensaje en el div de proximidad
+  document.getElementById("texto-proximidad").textContent = "❌ No se dio permiso para acceder a la ubicación";
+  console.warn("Permiso de ubicación denegado o error:", err);
+}, {
+  enableHighAccuracy: true,
+  maximumAge: 10000,
+  timeout: 10000
+});
 
-      userCircle = L.circle(userCoords, {
-        radius: 5,
-        color: 'green',
-        fillColor: '#0f0',
-        fillOpacity: 0.3
-      }).addTo(map);
-    }
-
-    // No se centra el mapa aquí
-  }, err => {
-    console.error("Error al obtener la ubicación:", err);
-    alert("No se pudo obtener tu ubicación.");
-  }, {
-    enableHighAccuracy: true,
-    maximumAge: 10000,
-    timeout: 10000
-  });
 }
 
 
@@ -391,6 +388,7 @@ navigator.geolocation.watchPosition(position => {
 });
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
