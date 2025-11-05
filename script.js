@@ -350,7 +350,7 @@ function calcularDistancia(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 
-// Función principal que lanza el popup si estás cerca de un edificio
+// Verifica proximidad y lanza popup si aplica
 function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
   edificios.forEach(edificio => {
     const distancia = calcularDistancia(
@@ -361,10 +361,17 @@ function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
     );
 
     if (distancia <= umbralDistancia) {
-      marcador.bindPopup(`🏢 Estás cerca de: <strong>${edificio.nombre}</strong>`).openPopup();
+      // Cierra cualquier popup anterior
+      marcador.closePopup();
+
+      // Asocia el popup y lo abre inmediatamente
+      marcador
+        .bindPopup(`🏢 Estás cerca de: <strong>${edificio.nombre}</strong>`)
+        .openPopup();
     }
   });
 }
+
 
 // Ejemplo de uso con Leaflet y geolocalización
 navigator.geolocation.watchPosition(position => {
@@ -386,6 +393,7 @@ navigator.geolocation.watchPosition(position => {
 
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
