@@ -695,7 +695,6 @@ h1.DRAGONESMAPS {
   z-index: 2000;
 }
 
-/* Indicador de proximidad */
 .proximidad-edificio {
   position: fixed;
   bottom: 100px;
@@ -711,7 +710,18 @@ h1.DRAGONESMAPS {
   transition: opacity 0.3s ease;
 }
 
-.proximidad-edificio.oculto {
-  opacity: 0;
+/* 📱 Reubicación en modo celular */
+@media (max-width: 768px) {
+  .proximidad-edificio {
+    bottom: 220px; /* sube el cuadro por encima del contenido bloqueado */
+    left: 10px;
+    right: 10px;
+    max-width: unset;
+    width: auto;
+    font-size: 13px;
+    z-index: 2000;
+  }
 }
+
+
 
