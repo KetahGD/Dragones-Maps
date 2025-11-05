@@ -369,11 +369,9 @@ function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
     );
 
     if (distancia <= umbralDistancia) {
-      marcador.closePopup();
-      marcador
-        .bindPopup(`🏢 Estás cerca de: <strong>${lugar.nombre}</strong>`)
-        .openPopup();
+  document.getElementById("texto-proximidad").textContent = `🏢 Estás cerca de: ${lugar.nombre}`;
     }
+
   });
 }
 
@@ -393,6 +391,7 @@ navigator.geolocation.watchPosition(position => {
 });
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
