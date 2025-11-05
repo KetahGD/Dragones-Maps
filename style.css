@@ -698,7 +698,7 @@ h1.DRAGONESMAPS {
 .proximidad-edificio {
   position: fixed;
   bottom: 100px;
-  left: 20px;
+  right: 20px;
   background-color: #085f26;
   color: white;
   padding: 10px 16px;
@@ -706,27 +706,21 @@ h1.DRAGONESMAPS {
   font-size: 14px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   z-index: 1600;
-  max-width: 300px;
-  transition: opacity 0.3s ease;
+  max-width: 280px;
+  width: auto;
 }
 
+/* 📱 Ajuste en modo celular */
 @media (max-width: 768px) {
   .proximidad-edificio {
-    position: fixed;
-    bottom: 240px; /* sube el cuadro por encima del contenido bloqueado */
-    left: 10px;
+    bottom: 240px; /* sube el cuadro para no estorbar */
     right: 10px;
-    width: auto;
-    max-width: unset;
+    left: auto;
+    max-width: 240px;
     font-size: 13px;
-    z-index: 2000;
-    background-color: #085f26;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
 }
+
 
 
 
