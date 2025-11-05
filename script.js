@@ -285,61 +285,13 @@ function llenarSelectores() {
   });
 }
 
-// Función para calcular distancia entre dos coordenadas (en metros)
-function distanciaEnMetros(lat1, lon1, lat2, lon2) {
-  const R = 6371000; // Radio de la Tierra en metros
-  const rad = Math.PI / 180;
-  const dLat = (lat2 - lat1) * rad;
-  const dLon = (lon2 - lon1) * rad;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
 
-// Crear popup para mostrar nombre del edificio cercano
-const popupCercano = L.popup({ offset: [0, -30], autoClose: false, closeOnClick: false });
+const umbralDistancia = 50; // metros
+const textoProximidad = document.getElementById("texto-proximidad");
 
-// Modificar el evento de geolocalización
-map.on('locationfound', function (e) {
-  const userLat = e.latitude;
-  const userLng = e.longitude;
-
-  // Actualizar marcador y círculo
-  userMarker.setLatLng([userLat, userLng]);
-  userCircle.setLatLng([userLat, userLng]);
-
-  // Buscar edificio más cercano
-  let edificioCercano = null;
-  let distanciaMinima = Infinity;
-  edificios.forEach(edificio => {
-    const dist = distanciaEnMetros(userLat, userLng, edificio.latitud, edificio.longitud);
-    if (dist < 30 && dist < distanciaMinima) {
-      distanciaMinima = dist;
-      edificioCercano = edificio;
-    }
-  });
-
-  // Mostrar popup si hay edificio cercano
-  if (edificioCercano) {
-    popupCercano
-      .setLatLng([userLat, userLng])
-      .setContent(`<strong>${edificioCercano.nombre}</strong>`)
-      .openOn(map);
-  } else {
-    map.closePopup(popupCercano);
-  }
-});
-
-
-// Umbral de distancia en metros para activar el popup
-const umbralDistancia = 50;
-
-// Función para calcular distancia entre dos coordenadas (Haversine)
+// Función para calcular distancia entre dos coordenadas
 function calcularDistancia(lat1, lng1, lat2, lng2) {
-  const R = 6371e3; // Radio de la Tierra en metros
+  const R = 6371e3;
   const rad = Math.PI / 180;
   const dLat = (lat2 - lat1) * rad;
   const dLng = (lng2 - lng1) * rad;
@@ -350,8 +302,10 @@ function calcularDistancia(lat1, lng1, lat2, lng2) {
   return R * c;
 }
 
-// Verifica proximidad y lanza popup si aplica
-function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
+// Verifica proximidad y actualiza el texto
+function actualizarProximidad(ubicacionActual) {
+  let edificioCercano = null;
+
   edificios.forEach(edificio => {
     const distancia = calcularDistancia(
       ubicacionActual.lat,
@@ -361,38 +315,36 @@ function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
     );
 
     if (distancia <= umbralDistancia) {
-      // Cierra cualquier popup anterior
-      marcador.closePopup();
-
-      // Asocia el popup y lo abre inmediatamente
-      marcador
-        .bindPopup(`🏢 Estás cerca de: <strong>${edificio.nombre}</strong>`)
-        .openPopup();
+      edificioCercano = edificio.nombre;
     }
   });
+
+  if (edificioCercano) {
+    textoProximidad.textContent = `🏢 Estás cerca de: ${edificioCercano}`;
+  } else {
+    textoProximidad.textContent = `No estás cerca de ningún edificio.`;
+  }
 }
 
-
-// Ejemplo de uso con Leaflet y geolocalización
+// Geolocalización en tiempo real
 navigator.geolocation.watchPosition(position => {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
-
   const ubicacionActual = { lat, lng };
 
-  // Actualiza el marcador de ubicación en tiempo real
+  // Actualiza marcador si lo tienes
   if (!window.miMarcador) {
     window.miMarcador = L.marker([lat, lng]).addTo(map);
   } else {
     window.miMarcador.setLatLng([lat, lng]);
   }
 
-  // Verifica proximidad y lanza popup si aplica
-  verificarProximidadYMostrarPopup(ubicacionActual, window.miMarcador);
+  // Verifica proximidad
+  actualizarProximidad(ubicacionActual);
 });
 
-
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
