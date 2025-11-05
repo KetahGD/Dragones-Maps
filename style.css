@@ -566,3 +566,131 @@ h1.DRAGONESMAPS {
   pointer-events: none;
   opacity: 0.6;
 }
+
+/* 🔹 Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+
+  /* Oculta el panel lateral verde */
+  .panel-lateral {
+    display: none;
+  }
+
+  /* Ajusta el mapa para ocupar todo el ancho */
+  #map {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Reubica los controles de zoom */
+  .zoom-controls {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  /* Ajusta el iframe (panorama) */
+  .iframe-container {
+    width: 90%;
+    right: 5%;
+    bottom: 80px;
+  }
+
+  /* Acomoda la barra superior */
+  .top-bar {
+    padding-left: 50px;
+  }
+
+  /* Reduce el tamaño del texto */
+  .top-title {
+    font-size: 16px;
+  }
+
+  /* Reubica la búsqueda */
+  .search-right {
+    right: 10px;
+    top: 10px;
+    gap: 6px;
+  }
+}
+/* === Ajustes generales del diseño responsivo y visual === */
+
+/* 1️⃣ Panel lateral oculto por defecto (solo con menú hamburguesa) */
+.panel-lateral {
+  display: none;
+}
+
+.panel-lateral.activo {
+  display: block;
+  width: 200px;
+  background-color: #abe1a5;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: calc(100vh - 60px);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+}
+
+/* Íconos visibles al abrir */
+.panel-lateral.activo .nav-item img {
+  width: 28px;
+  height: 28px;
+}
+
+/* 2️⃣ Panorama fijo en la parte derecha, pequeño */
+.iframe-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 260px;
+  height: 160px;
+  z-index: 200;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* 3️⃣ Controles de zoom a la izquierda del panorama */
+.zoom-controls {
+  position: fixed;
+  bottom: 60px;
+  right: 300px; /* alineado a la izquierda del panorama */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 300;
+}
+
+.zoom-controls button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #085f26;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.zoom-controls button:hover {
+  background-color: #abe1a5;
+  color: #000;
+}
+
+/* 4️⃣ Sugerencias de búsqueda: máximo 3 visibles con scroll */
+.sugerencias {
+  max-height: 150px; /* aprox 3 resultados */
+  overflow-y: auto;
+}
+
+/* Pequeño ajuste visual del menú hamburguesa */
+.menu-icon {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  z-index: 2000;
+}

@@ -1,8 +1,12 @@
-const map = L.map('map').setView([19.613127461053665, -99.33933418452095], 17);
+const map = L.map('map', {
+  zoomControl: false,        // Desactiva los botones de zoom por defecto
+  attributionControl: false  // Desactiva el texto de atribución de OpenStreetMap
+}).setView([19.613127461053665, -99.33933418452095], 17);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+  attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
+
 
 mostrarUbicacionEnTiempoReal();
 
@@ -77,7 +81,8 @@ const edificios = [
     { nombre: "ExHacienda", coords: [19.61297453785049, -99.3370500652114], imagen: "Image/ExHacienda.jpg", texto: "Este es el lugar en el que se encuentran los restos de la hacienda en la que se plantaron las bases para lo que es la Universidad Tecnologica Fidel Velazquez", iframe: "https://panoraven.com/es/embed/ESSkrAaOnw" },
     { nombre: "Centro de Investigacion", coords: [19.612731460349398, -99.34158703635343], imagen: "Image/CentroInvestigacion.jpg", texto: "Centro de vinculacion e investigacion para la resolucion de problemas y vinculacion con empresas para proyectos a futuro, ademas se encuentran los laboratorio de Metrología y Manufactura.", iframe: "https://panoraven.com/es/embed/XtytdM72be" },
     { nombre: "Gimnasio", coords: [19.61192531212748, -99.34346601220417], imagen: "Image/Gimnasio.jpg", texto: "Aqui es donde se encuentra el Estadio Dragones y ademas se practican diferentes disciplinas como lo son basquetball, taekwondo, voleyball y en la parte superior se encuentra lo que es el gimnasio con acceso gratuito para los estudiantes", iframe: "https://panoraven.com/es/embed/yo1POTdxXY" },
-    { nombre: "Harmon Hall" , coords:[19.561760889280613, -99.22256077579563] }
+    { nombre: "Harmon Hall" , coords:[19.561760889280613, -99.22256077579563] },
+    { nombre: "Casa" , coords:[19.606951843305342, -99.2302613564465] }
 ];
 edificios.forEach(edificio => {
   if (edificio.coords.length === 2) {
@@ -124,10 +129,17 @@ function cerrarInfo() {
 }
 
 function togglePanel() {
-    const panel = document.getElementById("panel");
-    const overlay = document.getElementById("overlay");
-    panel.classList.toggle("activo");
-    overlay.classList.toggle("activo");
+  const panel = document.getElementById("panel");
+  const overlay = document.getElementById("overlay");
+  const info = document.getElementById("info-edificio");
+
+  // Evita abrir el menú si la barra de información está visible
+  if (info && info.style.display === "block") {
+    return;
+  }
+
+  panel.classList.toggle("activo");
+  overlay.classList.toggle("activo");
 }
 
 
@@ -152,7 +164,8 @@ const edificiosS = {
   'ExHacienda': 'Casco de la Ex-Hacienda',
   'Centro de Investigacion': 'Centro de Investigación y Vinculación',
   'Gimnasio': 'Estadio y Gimnasio "Dragones"',
-  'Harmon Hall': 'Harmon Hall'
+  'Harmon Hall': 'Harmon Hall',
+  'Casa': 'Casa'
 };
 
 
@@ -318,6 +331,57 @@ map.on('locationfound', function (e) {
   } else {
     map.closePopup(popupCercano);
   }
+});
+
+
+// Umbral de distancia en metros para activar el popup
+const umbralDistancia = 50;
+
+// Función para calcular distancia entre dos coordenadas (Haversine)
+function calcularDistancia(lat1, lng1, lat2, lng2) {
+  const R = 6371e3; // Radio de la Tierra en metros
+  const rad = Math.PI / 180;
+  const dLat = (lat2 - lat1) * rad;
+  const dLng = (lng2 - lng1) * rad;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLng / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+// Función principal que lanza el popup si estás cerca de un edificio
+function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
+  edificios.forEach(edificio => {
+    const distancia = calcularDistancia(
+      ubicacionActual.lat,
+      ubicacionActual.lng,
+      edificio.lat,
+      edificio.lng
+    );
+
+    if (distancia <= umbralDistancia) {
+      marcador.bindPopup(`🏢 Estás cerca de: <strong>${edificio.nombre}</strong>`).openPopup();
+    }
+  });
+}
+
+// Ejemplo de uso con Leaflet y geolocalización
+navigator.geolocation.watchPosition(position => {
+  const lat = position.coords.latitude;
+  const lng = position.coords.longitude;
+
+  const ubicacionActual = { lat, lng };
+
+  // Actualiza el marcador de ubicación en tiempo real
+  if (!window.miMarcador) {
+    window.miMarcador = L.marker([lat, lng]).addTo(map);
+  } else {
+    window.miMarcador.setLatLng([lat, lng]);
+  }
+
+  // Verifica proximidad y lanza popup si aplica
+  verificarProximidadYMostrarPopup(ubicacionActual, window.miMarcador);
 });
 
 

@@ -155,3 +155,148 @@
   width: 20px;
   height: 20px;
 }
+/* ===== Ajustes para el Inicio ===== */
+
+/* Ocultar la barra lateral o menú si existiera */
+.panel-lateral,
+.menu-icon {
+  display: none !important;
+}
+
+/* Centrar todo el contenido */
+.inicio-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8fdf7;
+  padding: 20px;
+}
+
+/* Imagen del dragón grande (izquierda) */
+.logo-dragones {
+  width: 200px;
+  margin-right: 50px;
+}
+
+/* Imagen del texto "Dragones Maps" */
+.logo-dragonesString {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+/* ===== Vista para teléfonos ===== */
+@media (max-width: 768px) {
+  /* Ocultar el dragón grande */
+  .logo-dragones {
+    display: none;
+  }
+
+  /* Centrar contenido */
+  .contenido-lateral {
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Ajustar tamaño del logo de texto */
+  .logo-dragonesString {
+    width: 80%;
+    max-width: 260px;
+  }
+
+  /* Inputs de búsqueda */
+  .search-box input {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  /* Botones centrados */
+  .botones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Centrar y agrandar el logo */
+  .logo-dragonesString {
+    width: 100%;
+    max-width: 360px; /* más grande */
+    display: block;
+    margin: 0 auto 30px auto;
+  }
+
+  /* Centrado general */
+  .contenido-lateral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Cuadro de búsqueda */
+  .search-box {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  /* Botones */
+  .botones {
+    display: flex;
+    justify-content: space-between; /* distribuye los botones correctamente */
+    width: 90%;
+    gap: 15px; /* separación agradable */
+  }
+
+  .botones a {
+    flex: 1; /* ambos ocupan el mismo espacio */
+  }
+
+  .boton-verde {
+    width: 100%;
+    background-color: #085f26;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+  }
+
+  .boton-verde:hover {
+    background-color: #0a6f2c;
+  }
+
+  /* Alineación visual */
+  .botones a:last-child {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Fondo y estructura */
+  .inicio-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fdf7;
+    padding: 20px;
+  }
+}
