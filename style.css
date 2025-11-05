@@ -710,18 +710,24 @@ h1.DRAGONESMAPS {
   transition: opacity 0.3s ease;
 }
 
-/* 📱 Reubicación en modo celular */
 @media (max-width: 768px) {
   .proximidad-edificio {
-    bottom: 220px; /* sube el cuadro por encima del contenido bloqueado */
+    position: fixed;
+    bottom: 240px; /* sube el cuadro por encima del contenido bloqueado */
     left: 10px;
     right: 10px;
-    max-width: unset;
     width: auto;
+    max-width: unset;
     font-size: 13px;
     z-index: 2000;
+    background-color: #085f26;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
 }
+
 
 
 
