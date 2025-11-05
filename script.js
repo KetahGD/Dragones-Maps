@@ -285,45 +285,96 @@ function llenarSelectores() {
   });
 }
 
+const lugaresUTFV = [
+  { nombre: "La Era", lat: 19.613065042754652, lng: -99.33843453247002 },
+  { nombre: "Edificio D", lat: 19.613199385731225, lng: -99.33929682332334 },
+  { nombre: "Edificio E", lat: 19.612658550345884, lng: -99.33923302928696 },
+  { nombre: "Edificio G", lat: 19.612740662393154, lng: -99.34097796305412 },
+  { nombre: "Cafeteria", lat: 19.61259982026864, lng: -99.34032226031468 },
+  { nombre: "Edificio K", lat: 19.612345485457844, lng: -99.34055844750884 },
+  { nombre: "Edificio L", lat: 19.611967304478743, lng: -99.33941718477618 },
+  { nombre: "Edificio M", lat: 19.61147603613746, lng: -99.33906416943061 },
+  { nombre: "Edificio F", lat: 19.6115459976567, lng: -99.33884497301763 },
+  { nombre: "Centro de Idiomas", lat: 19.61291571529895, lng: -99.34203939229064 },
+  { nombre: "Edificio O", lat: 19.611573572691313, lng: -99.34284378630267 },
+  { nombre: "Edificio P", lat: 19.609741423421426, lng: -99.34507255218833 },
+  { nombre: "Puerta 1", lat: 19.613497987240066, lng: -99.33705293640301 },
+  { nombre: "Puerta 2", lat: 19.61388716696635, lng: -99.339454727527 },
+  { nombre: "Puerta 3", lat: 19.613171955219137, lng: -99.34140875996792 },
+  { nombre: "Puerta 4", lat: 19.613333951711006, lng: -99.34217566011411 },
+  { nombre: "Puerta 5", lat: 19.613505302108074, lng: -99.34378693919246 },
+  { nombre: "ExHacienda", lat: 19.61297453785049, lng: -99.3370500652114 },
+  { nombre: "Centro de Investigacion", lat: 19.612731460349398, lng: -99.34158703635343 },
+  { nombre: "Gimnasio", lat: 19.61192531212748, lng: -99.34346601220417 },
+  { nombre: "Harmon Hall", lat: 19.561760889280613, lng: -99.22256077579563 },
+  { nombre: "Casa", lat: 19.606951843305342, lng: -99.2302613564465 }
+];
 
-const umbralDistancia = 50; // metros
-const textoProximidad = document.getElementById("texto-proximidad");
-
-// Función para calcular distancia entre dos coordenadas
-function calcularDistancia(lat1, lng1, lat2, lng2) {
-  const R = 6371e3;
+// Función para calcular distancia entre dos coordenadas (en metros)
+function distanciaEnMetros(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
   const rad = Math.PI / 180;
   const dLat = (lat2 - lat1) * rad;
-  const dLng = (lng2 - lng1) * rad;
+  const dLon = (lon2 - lon1) * rad;
   const a =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLng / 2) ** 2;
+    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
 
-// Verifica proximidad y actualiza el texto
-function actualizarProximidad(ubicacionActual) {
+// Crear popup para mostrar nombre del edificio cercano
+const popupCercano = L.popup({ offset: [0, -30], autoClose: false, closeOnClick: false });
+
+// Evento de geolocalización
+map.on('locationfound', function (e) {
+  const userLat = e.latitude;
+  const userLng = e.longitude;
+
+  userMarker.setLatLng([userLat, userLng]);
+  userCircle.setLatLng([userLat, userLng]);
+
   let edificioCercano = null;
+  let distanciaMinima = Infinity;
 
-  edificios.forEach(edificio => {
-    const distancia = calcularDistancia(
-      ubicacionActual.lat,
-      ubicacionActual.lng,
-      edificio.lat,
-      edificio.lng
-    );
-
-    if (distancia <= umbralDistancia) {
-      edificioCercano = edificio.nombre;
+  lugaresUTFV.forEach(lugar => {
+    const dist = distanciaEnMetros(userLat, userLng, lugar.lat, lugar.lng);
+    if (dist < 30 && dist < distanciaMinima) {
+      distanciaMinima = dist;
+      edificioCercano = lugar;
     }
   });
 
   if (edificioCercano) {
-    textoProximidad.textContent = `🏢 Estás cerca de: ${edificioCercano}`;
+    popupCercano
+      .setLatLng([userLat, userLng])
+      .setContent(`🏢 Estás cerca de: <strong>${edificioCercano.nombre}</strong>`)
+      .openOn(map);
   } else {
-    textoProximidad.textContent = `No estás cerca de ningún edificio.`;
+    map.closePopup(popupCercano);
   }
+});
+
+// Umbral de distancia
+const umbralDistancia = 50;
+
+// Función alternativa para mostrar popup desde marcador
+function verificarProximidadYMostrarPopup(ubicacionActual, marcador) {
+  lugaresUTFV.forEach(lugar => {
+    const distancia = distanciaEnMetros(
+      ubicacionActual.lat,
+      ubicacionActual.lng,
+      lugar.lat,
+      lugar.lng
+    );
+
+    if (distancia <= umbralDistancia) {
+      marcador.closePopup();
+      marcador
+        .bindPopup(`🏢 Estás cerca de: <strong>${lugar.nombre}</strong>`)
+        .openPopup();
+    }
+  });
 }
 
 // Geolocalización en tiempo real
@@ -332,18 +383,17 @@ navigator.geolocation.watchPosition(position => {
   const lng = position.coords.longitude;
   const ubicacionActual = { lat, lng };
 
-  // Actualiza marcador si lo tienes
   if (!window.miMarcador) {
     window.miMarcador = L.marker([lat, lng]).addTo(map);
   } else {
     window.miMarcador.setLatLng([lat, lng]);
   }
 
-  // Verifica proximidad
-  actualizarProximidad(ubicacionActual);
+  verificarProximidadYMostrarPopup(ubicacionActual, window.miMarcador);
 });
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
