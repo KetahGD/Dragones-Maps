@@ -714,12 +714,13 @@ h1.DRAGONESMAPS {
 @media (max-width: 768px) {
   .proximidad-edificio {
     bottom: 200px; /* sube el cuadro para no estorbar */
-    right: 10px;
+    right: 20px;
     left: auto;
     max-width: 240px;
     font-size: 13px;
   }
 }
+
 
 
 
