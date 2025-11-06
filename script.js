@@ -320,9 +320,6 @@ function distanciaEnMetros(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// Crear popup para mostrar nombre del edificio cercano
-const popupCercano = L.popup({ offset: [0, -30], autoClose: false, closeOnClick: false });
-
 // Evento de geolocalización
 map.on('locationfound', function (e) {
   const userLat = e.latitude;
@@ -388,6 +385,7 @@ navigator.geolocation.watchPosition(position => {
 });
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
