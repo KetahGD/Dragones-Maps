@@ -697,7 +697,7 @@ h1.DRAGONESMAPS {
 
 .proximidad-edificio {
   position: fixed;
-  bottom: 100px;
+  bottom: 200px;
   right: 20px;
   background-color: #085f26;
   color: white;
@@ -720,6 +720,7 @@ h1.DRAGONESMAPS {
     font-size: 13px;
   }
 }
+
 
 
 
