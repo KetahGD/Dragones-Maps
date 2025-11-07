@@ -342,7 +342,7 @@ map.on('locationfound', function (e) {
   if (edificioCercano) {
     popupCercano
       .setLatLng([userLat, userLng])
-      .setContent(`🏢 Estás cerca de: <strong>${edificioCercano.nombre}</strong>`)
+      .setContent(`Te encuentras cerca de: <strong>${edificioCercano.nombre}</strong>`)
       .openOn(map);
   } else {
     map.closePopup(popupCercano);
@@ -385,6 +385,7 @@ navigator.geolocation.watchPosition(position => {
 });
 
 document.addEventListener("DOMContentLoaded", llenarSelectores);
+
 
 
 
