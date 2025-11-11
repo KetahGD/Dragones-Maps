@@ -725,6 +725,15 @@ h1.DRAGONESMAPS {
   }
 }
 
+.top-title {
+  text-decoration: none; /* Quita la línea */
+  color: inherit;        /* Mantiene el color del texto actual */
+  cursor: pointer;       /* Muestra el cursor de clic */
+}
+
+.top-title:hover {
+  opacity: 0.8; /* Efecto sutil al pasar el mouse */
+}
 
 
 
