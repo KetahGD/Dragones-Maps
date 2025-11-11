@@ -443,6 +443,8 @@ h1.DRAGONESMAPS {
     top: 0;
     padding: 10px;
   }
+  
+}
 
 .sugerencias {
   position: absolute;
@@ -734,6 +736,7 @@ h1.DRAGONESMAPS {
 .top-title:hover {
   opacity: 0.8; /* Efecto sutil al pasar el mouse */
 }
+
 
 
 
